@@ -764,6 +764,9 @@ macro(CheckOpenGLESX11)
         #define EGL_API_FB
         #include <EGL/egl.h>
         int main (int argc, char** argv) {}" HAVE_VIDEO_OPENGL_EGL)
+    if(VIDEO_MALI)
+        set(HAVE_VIDEO_OPENGL_EGL TRUE)
+    endif()
     if(HAVE_VIDEO_OPENGL_EGL)
         set(SDL_VIDEO_OPENGL_EGL 1)
     endif()
@@ -1173,3 +1176,26 @@ macro(CheckKMSDRM)
     endif()
   endif()
 endmacro()
+
+# Requires:
+# - n/a
+macro(CheckMali)
+  if(VIDEO_MALI)
+    check_c_source_compiles("
+        #define LINUX
+        #define EGL_API_FB
+        #define EGL_FBDEV
+        #include <EGL/egl.h>
+        int main(int argc, char** argv) {}" HAVE_VIDEO_MALI_EGL_FB)
+    if(HAVE_VIDEO_MALI_EGL_FB)
+      set(HAVE_VIDEO_MALI TRUE)
+      set(HAVE_SDL_VIDEO TRUE)
+
+      file(GLOB MALI_SOURCES ${SDL2_SOURCE_DIR}/src/video/mali-fbdev/*.c)
+      set(SOURCE_FILES ${SOURCE_FILES} ${MALI_SOURCES})
+      set(SDL_VIDEO_DRIVER_MALI 1)
+      list(APPEND EXTRA_CFLAGS -DLINUX -DEGL_API_FB -DEGL_FBDEV)
+      list(APPEND EXTRA_LIBS EGL)
+    endif(HAVE_VIDEO_MALI_EGL_FB)
+  endif(VIDEO_MALI)
+endmacro(CheckMali)
