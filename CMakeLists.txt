@@ -15,6 +15,8 @@ project(SDL2 C CXX)
 # !!! FIXME:  properly resolved.
 #cmake_policy(SET CMP0042 OLD)
 
+option(NO_PKG_CONFIG                    "Disable pkg-config"    OFF)
+
 include(CheckFunctionExists)
 include(CheckLibraryExists)
 include(CheckIncludeFiles)
@@ -26,7 +28,9 @@ include(CheckCCompilerFlag)
 include(CheckTypeSize)
 include(CheckStructHasMember)
 include(CMakeDependentOption)
+if(NOT NO_PKG_CONFIG)
 include(FindPkgConfig)
+endif(NOT NO_PKG_CONFIG)
 include(GNUInstallDirs)
 set(CMAKE_MODULE_PATH "${SDL2_SOURCE_DIR}/cmake")
 include(${SDL2_SOURCE_DIR}/cmake/macros.cmake)

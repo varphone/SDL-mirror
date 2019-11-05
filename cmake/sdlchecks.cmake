@@ -134,7 +134,7 @@ endmacro()
 # - PULSEAUDIO_SHARED opt
 # - HAVE_DLOPEN opt
 macro(CheckPulseAudio)
-  if(PULSEAUDIO)
+  if(PULSEAUDIO AND PKG_CONFIG_FOUND)
     pkg_check_modules(PKG_PULSEAUDIO libpulse-simple)
     if(PKG_PULSEAUDIO_FOUND)
       set(HAVE_PULSEAUDIO TRUE)
@@ -164,7 +164,7 @@ endmacro()
 # - JACK_SHARED opt
 # - HAVE_DLOPEN opt
 macro(CheckJACK)
-  if(JACK)
+  if(JACK AND PKG_CONFIG_FOUND)
     pkg_check_modules(PKG_JACK jack)
     if(PKG_JACK_FOUND)
       set(HAVE_JACK TRUE)
@@ -194,7 +194,7 @@ endmacro()
 # - ESD_SHARED opt
 # - HAVE_DLOPEN opt
 macro(CheckESD)
-  if(ESD)
+  if(ESD AND PKG_CONFIG_FOUND)
     pkg_check_modules(PKG_ESD esound)
     if(PKG_ESD_FOUND)
       set(HAVE_ESD TRUE)
@@ -321,7 +321,7 @@ endmacro()
 # - FUSIONSOUND_SHARED opt
 # - HAVE_DLOPEN opt
 macro(CheckFusionSound)
-  if(FUSIONSOUND)
+  if(FUSIONSOUND AND PKG_CONFIG_FOUND)
     pkg_check_modules(PKG_FUSIONSOUND fusionsound>=1.0.0)
     if(PKG_FUSIONSOUND_FOUND)
       set(HAVE_FUSIONSOUND TRUE)
@@ -592,7 +592,7 @@ endmacro()
 # - WAYLAND_SHARED opt
 # - HAVE_DLOPEN opt
 macro(CheckWayland)
-  if(VIDEO_WAYLAND)
+  if(VIDEO_WAYLAND AND PKG_CONFIG_FOUND)
     pkg_check_modules(WAYLAND wayland-client wayland-scanner wayland-protocols wayland-egl wayland-cursor egl xkbcommon)
 
     if(WAYLAND_FOUND)
@@ -683,7 +683,7 @@ endmacro()
 # - DIRECTFB_SHARED opt
 # - HAVE_DLOPEN opt
 macro(CheckDirectFB)
-  if(VIDEO_DIRECTFB)
+  if(VIDEO_DIRECTFB AND PKG_CONFIG_FOUND)
     pkg_check_modules(PKG_DIRECTFB directfb>=1.0.0)
     if(PKG_DIRECTFB_FOUND)
       set(HAVE_VIDEO_DIRECTFB TRUE)
@@ -1070,7 +1070,7 @@ endmacro()
 
 # Check for HIDAPI joystick drivers. This is currently a Unix thing, not Windows or macOS!
 macro(CheckHIDAPI)
-  if(HIDAPI)
+  if(HIDAPI AND PKG_CONFIG_FOUND)
     if(HIDAPI_SKIP_LIBUSB)
       set(HAVE_HIDAPI TRUE)
     else()
@@ -1102,7 +1102,7 @@ endmacro()
 # Requires:
 # - n/a
 macro(CheckRPI)
-  if(VIDEO_RPI)
+  if(VIDEO_RPI AND PKG_CONFIG_FOUND)
     pkg_check_modules(VIDEO_RPI bcm_host brcmegl)
     if (NOT VIDEO_RPI_FOUND)
       set(VIDEO_RPI_INCLUDE_DIRS "/opt/vc/include" "/opt/vc/include/interface/vcos/pthreads" "/opt/vc/include/interface/vmcs_host/linux/" )
@@ -1131,7 +1131,7 @@ macro(CheckRPI)
       set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${VIDEO_RPI_INCLUDE_FLAGS} ${VIDEO_RPI_LIBRARY_FLAGS}")
       list(APPEND EXTRA_LDFLAGS ${VIDEO_RPI_LDFLAGS})
     endif(SDL_VIDEO AND HAVE_VIDEO_RPI)
-  endif(VIDEO_RPI)
+  endif(VIDEO_RPI AND PKG_CONFIG_FOUND)
 endmacro(CheckRPI)
 
 # Requires:
@@ -1141,7 +1141,7 @@ endmacro(CheckRPI)
 # - KMSDRM_SHARED opt
 # - HAVE_DLOPEN opt
 macro(CheckKMSDRM)
-  if(VIDEO_KMSDRM)
+  if(VIDEO_KMSDRM AND PKG_CONFIG_FOUND)
     pkg_check_modules(KMSDRM libdrm gbm egl)
     if(KMSDRM_FOUND)
       link_directories(
